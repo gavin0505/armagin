@@ -29,13 +29,11 @@ public class ProcessController {
      */
     public void transform(TransformContext context) {
 
-        System.out.println("pc:hashcode: " + hashCode());
         /*
          * 遍历流程节点
          */
         List<BusinessProcess> processList = pipelineConfig.urlTransformProcessTemplate().getProcessList();
         for (BusinessProcess businessProcess : processList) {
-            System.out.println("process-hashcode:" + businessProcess.hashCode());
             businessProcess.process(context);
             if (context.getNeedBreak()) {
                 break;
