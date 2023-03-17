@@ -1,6 +1,9 @@
 package cc.forim.armagin.server.pipeline.config;
 
-import cc.forim.armagin.server.action.TestAction;
+import cc.forim.armagin.server.action.HeaderAction;
+import cc.forim.armagin.server.action.RedirectUrlAction;
+import cc.forim.armagin.server.action.TransformEventAction;
+import cc.forim.armagin.server.action.UrlTransformAction;
 import cc.forim.armagin.server.pipeline.ProcessTemplate;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
@@ -31,10 +34,14 @@ public class PipelineConfig implements ApplicationContextAware {
      * 短链处理流程
      */
     public ProcessTemplate urlTransformProcessTemplate() {
-        TestAction testAction = applicationContext.getBean(TestAction.class);
+        HeaderAction headerAction = applicationContext.getBean(HeaderAction.class);
+        UrlTransformAction urlTransformAction = applicationContext.getBean(UrlTransformAction.class);
+        RedirectUrlAction redirectUrlAction = applicationContext.getBean(RedirectUrlAction.class);
+        TransformEventAction transformEventAction = applicationContext.getBean(TransformEventAction.class);
+
         ProcessTemplate processTemplate = new ProcessTemplate();
-        // todo 组装短链处理
-        processTemplate.setProcessList(Arrays.asList(testAction));
+        // 组装责任链
+        processTemplate.setProcessList(Arrays.asList(headerAction, urlTransformAction, redirectUrlAction, transformEventAction));
         return processTemplate;
     }
 }
