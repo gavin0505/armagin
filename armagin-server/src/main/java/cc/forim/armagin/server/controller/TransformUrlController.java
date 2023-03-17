@@ -1,5 +1,6 @@
 package cc.forim.armagin.server.controller;
 
+import cc.forim.armagin.server.enums.TransformEnum;
 import cc.forim.armagin.server.pipeline.TransformContext;
 import cc.forim.armagin.server.service.UrlTransformService;
 import org.springframework.http.HttpHeaders;
@@ -42,12 +43,15 @@ public class TransformUrlController {
     public Mono<Void> redirectExample2(@PathVariable("compressionCode") String compressionCode, ServerWebExchange exchange) {
 
         ServerHttpRequest request = exchange.getRequest();
-        TransformContext context = new TransformContext();
 
+        // 构建初始化上下文
+        TransformContext context = new TransformContext();
         context.setCompressionCode(compressionCode);
-        context.setParam("swe", exchange);
+        context.setParam(TransformEnum.SWE.getValue(), exchange);
+
+        // 设置请求主机名
         if (Objects.nonNull(request.getRemoteAddress())) {
-            context.setParam("主机名", request.getRemoteAddress().getHostName());
+            context.setParam(TransformEnum.RHN.getValue(), request.getRemoteAddress().getHostName());
         }
         // 获取请求头
         HttpHeaders httpHeaders = request.getHeaders();
@@ -61,7 +65,7 @@ public class TransformUrlController {
             });
         }
 
-        // 执行短链转换
+        // 执行责任链，进行短链转换
         urlTransformService.processTransform(context);
 
         return Mono.fromRunnable(new Thread(() -> {
