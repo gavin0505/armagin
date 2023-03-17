@@ -17,9 +17,14 @@ import lombok.ToString;
 public enum TransformEnum {
 
     /**
-     * ServerWebExchange
+     * Server_Web_Exchange
      */
     SWE("SWE"),
+
+    /**
+     * Remote_Host_Name
+     */
+    RHN("RHN"),
 
     /**
      * Cookie
