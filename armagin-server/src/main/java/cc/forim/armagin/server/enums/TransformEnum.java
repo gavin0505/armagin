@@ -31,6 +31,16 @@ public enum TransformEnum {
      */
     COOKIE("COOKIE"),
 
+    /**
+     * null
+     */
+    NULL("null"),
+
+    /**
+     * LongUrl
+     */
+    LU("LU")
+
     ;
     private final String value;
 }
