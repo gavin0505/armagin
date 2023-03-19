@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: armagin-server
+
+  # 配置Redis
+  redis:
+    host: localhost
+    port: 6379
+
   # 数据库配置
   datasource:
     #druid配置
