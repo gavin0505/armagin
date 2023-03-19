@@ -47,3 +47,9 @@ spring:
     #开启驼峰功能
     configuration:
       map-underscore-to-camel-case: true
+
+armagin:
+  server:
+    common:
+      # 错误页面路径
+      errorUrl: "/error"
