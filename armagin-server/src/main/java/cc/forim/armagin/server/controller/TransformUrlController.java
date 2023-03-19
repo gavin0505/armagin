@@ -6,7 +6,6 @@ import cc.forim.armagin.server.service.UrlTransformService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +16,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
-
-import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 /**
  * 短链映射转换控制器
@@ -32,7 +28,7 @@ import static org.springframework.web.cors.CorsConfiguration.ALL;
  */
 
 @Controller
-@RequestMapping("/v")
+@RequestMapping(value = {"/v", "/j"})
 public class TransformUrlController {
 
     @Resource(name = "urlTransformServiceImpl")
@@ -40,8 +36,9 @@ public class TransformUrlController {
 
     @GetMapping("/{compressionCode}")
     @ResponseStatus(HttpStatus.FOUND)
-    public Mono<Void> redirectExample2(@PathVariable("compressionCode") String compressionCode, ServerWebExchange exchange) {
+    public Mono<Void> redirectForV(@PathVariable("compressionCode") String compressionCode, ServerWebExchange exchange) {
 
+        // 获取请求
         ServerHttpRequest request = exchange.getRequest();
 
         // 构建初始化上下文
@@ -68,15 +65,6 @@ public class TransformUrlController {
         // 执行责任链，进行短链转换
         urlTransformService.processTransform(context);
 
-        return Mono.fromRunnable(new Thread(() -> {
-            ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode(HttpStatus.FOUND);
-            response.getHeaders().setLocation(URI.create("https://www.baidu.com"));
-            response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, ALL);
-            response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, ALL);
-            response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
-        }));
-
-//        return Mono.fromRunnable(context.getRedirection());
+        return Mono.fromRunnable(context.getRedirectAction());
     }
 }
