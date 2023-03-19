@@ -1,9 +1,9 @@
 package cc.forim.armagin.server.action;
 
-import cc.forim.armagin.server.enums.CacheKeyEnum;
-import cc.forim.armagin.server.enums.TransformEnum;
-import cc.forim.armagin.server.enums.TransformStatus;
-import cc.forim.armagin.server.exceptions.RedirectToErrorPageException;
+import cc.forim.armagin.server.infra.enums.CacheKeyEnum;
+import cc.forim.armagin.server.infra.enums.TransformEnum;
+import cc.forim.armagin.server.infra.enums.TransformStatus;
+import cc.forim.armagin.server.infra.exceptions.RedirectToErrorPageException;
 import cc.forim.armagin.server.pipeline.BusinessProcess;
 import cc.forim.armagin.server.pipeline.TransformContext;
 import cn.hutool.core.util.StrUtil;
@@ -17,7 +17,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import javax.annotation.Resource;
 
-import static cc.forim.armagin.server.enums.CommonConstant.PROTOCOL_SP;
+import static cc.forim.armagin.server.infra.enums.CommonConstant.PROTOCOL_SP;
 
 /**
  * 【2】Url映射处理

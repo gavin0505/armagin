@@ -1,6 +1,6 @@
 package cc.forim.armagin.server.controller;
 
-import cc.forim.armagin.server.enums.TransformEnum;
+import cc.forim.armagin.server.infra.enums.TransformEnum;
 import cc.forim.armagin.server.pipeline.TransformContext;
 import cc.forim.armagin.server.service.UrlTransformService;
 import org.springframework.http.HttpHeaders;

@@ -1,7 +1,7 @@
 package cc.forim.armagin.server.action;
 
-import cc.forim.armagin.server.enums.TransformEnum;
-import cc.forim.armagin.server.enums.TransformStatus;
+import cc.forim.armagin.server.infra.enums.TransformEnum;
+import cc.forim.armagin.server.infra.enums.TransformStatus;
 import cc.forim.armagin.server.infra.spring.WebFluxServerResponseWriter;
 import cc.forim.armagin.server.pipeline.BusinessProcess;
 import cc.forim.armagin.server.pipeline.TransformContext;

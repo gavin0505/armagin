@@ -1,6 +1,6 @@
 package cc.forim.armagin.server.infra.spring;
 
-import cc.forim.armagin.server.exceptions.RedirectToErrorPageException;
+import cc.forim.armagin.server.infra.exceptions.RedirectToErrorPageException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

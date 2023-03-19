@@ -1,6 +1,6 @@
 package cc.forim.armagin.server.pipeline;
 
-import cc.forim.armagin.server.enums.TransformStatus;
+import cc.forim.armagin.server.infra.enums.TransformStatus;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;

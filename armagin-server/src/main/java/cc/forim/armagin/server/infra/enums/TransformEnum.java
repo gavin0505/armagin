@@ -1,4 +1,4 @@
-package cc.forim.armagin.server.enums;
+package cc.forim.armagin.server.infra.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

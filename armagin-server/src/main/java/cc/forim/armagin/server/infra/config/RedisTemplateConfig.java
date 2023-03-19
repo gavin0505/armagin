@@ -1,4 +1,4 @@
-package cc.forim.armagin.server.config;
+package cc.forim.armagin.server.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

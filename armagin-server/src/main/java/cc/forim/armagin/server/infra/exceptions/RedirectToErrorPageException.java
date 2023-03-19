@@ -1,4 +1,4 @@
-package cc.forim.armagin.server.exceptions;
+package cc.forim.armagin.server.infra.exceptions;
 
 /**
  * 短链重定向异常

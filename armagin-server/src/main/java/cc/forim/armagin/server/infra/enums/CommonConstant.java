@@ -1,4 +1,4 @@
-package cc.forim.armagin.server.enums;
+package cc.forim.armagin.server.infra.enums;
 
 /**
  * 协议通用常量
