@@ -23,10 +23,6 @@ public class CorsConfig implements WebFluxConfigurer {
                 // 允许跨域访问的方法
                 .allowedMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
                 // 预检间隔时间
-                .maxAge(10000)
-                // 允许头部设置
-                .allowedHeaders("*")
-                // 是否发送Cookie
-                .allowCredentials(true);
+                .maxAge(10000);
     }
 }
