@@ -86,6 +86,13 @@ public class TransformContext {
         return headers.get(key);
     }
 
+    /**
+     * 释放Headers
+     */
+    public void releaseHeaders() {
+        headers = null;
+    }
+
     public void setRedirectAction(Runnable redirectAction) {
         this.redirectAction.set(redirectAction);
     }
