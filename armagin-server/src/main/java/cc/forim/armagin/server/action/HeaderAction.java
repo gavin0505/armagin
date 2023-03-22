@@ -1,5 +1,8 @@
 package cc.forim.armagin.server.action;
 
+import cc.forim.armagin.server.infra.enums.HttpHeaderEnum;
+import cc.forim.armagin.server.infra.enums.TransformEnum;
+import cc.forim.armagin.server.infra.utils.IpUtil;
 import cc.forim.armagin.server.pipeline.BusinessProcess;
 import cc.forim.armagin.server.pipeline.TransformContext;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -20,5 +23,19 @@ public class HeaderAction implements BusinessProcess {
 
     @Override
     public void process(TransformContext context) {
+        try {
+            // 获取User-Agent和Cookie并添加到上下文参数
+            String ua = context.getHeader(HttpHeaderEnum.UA.getValue());
+            String cookie = context.getHeader(HttpHeaderEnum.COOKIES.getValue());
+            context.setParam(TransformEnum.UA.getValue(), ua);
+            context.setParam(TransformEnum.COOKIE.getValue(), cookie);
+
+            // 获取客户端主机名并添加到上下文参数
+            String clientHostName = context.getParam(TransformEnum.RHN.getValue());
+            context.setParam(TransformEnum.CLIENT_ID.getValue(), IpUtil.X.extractClientIp(context.getHeaders(), clientHostName));
+        } finally {
+            // 释放上下文的header
+            context.releaseHeaders();
+        }
     }
 }
