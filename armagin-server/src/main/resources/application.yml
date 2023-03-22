@@ -5,6 +5,31 @@ spring:
   application:
     name: armagin-server
 
+  # 配置Kafka
+  kafka:
+    bootstrap-servers: ${armagin.kafka.ip}:${armagin.kafka.port}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 128kb
+      batch-size: 131072
+      # 64M
+      buffer-memory: 67108864
+      # max-request-size: 5242880
+      # linger-ms: 5
+      retries: 1
+      acks: 0
+      # 提升性能很重要
+      compression-type: gzip
+      properties:
+        # 5M
+        max.request.size: 5242880
+        linger.ms: 5
+    consumer:
+      -auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 3000
+
   # 配置Redis
   redis:
     host: localhost
@@ -39,6 +64,7 @@ spring:
       discovery:
         # 配置Nacos注册中心地址
         server-addr: localhost:8848
+        namespace: 9eea61f7-7a31-43bd-9fad-f569948847bc
 
   #配置mybatis
   mybatis:
@@ -53,3 +79,9 @@ armagin:
     common:
       # 错误页面路径
       errorUrl: "/error"
+  kafka:
+    ip: localhost
+    port: 9092
+  transformEvent:
+    topic:
+      name: amgTransEvent
