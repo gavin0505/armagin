@@ -42,6 +42,11 @@ public enum TransformEnum {
     LU("LU"),
 
     /**
+     * ShortUrl
+     */
+    SU("SU"),
+
+    /**
      * User-Agent
      */
     UA("UA"),
