@@ -39,7 +39,17 @@ public enum TransformEnum {
     /**
      * LongUrl
      */
-    LU("LU")
+    LU("LU"),
+
+    /**
+     * User-Agent
+     */
+    UA("UA"),
+
+    /**
+     * CLIENT_ID
+     */
+    CLIENT_ID("CLIENT_ID")
 
     ;
     private final String value;
