@@ -47,7 +47,7 @@ public class BlackListIpFilter implements WebFilter {
         // 获取请求的ip
         ServerHttpRequest request = exchange.getRequest();
         String clientIp = IpUtil.X.extractClientIp(request);
-        
+
         // 若请求ip不在黑名单，则继续执行
         if (!redisUtil.sHasKey(BLACK_IP.getKey(), clientIp)) {
             return chain.filter(exchange);
