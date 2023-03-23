@@ -20,6 +20,12 @@ public enum CacheKeyEnum {
     /**
      * 映射前缀
      */
-    UM("armagin:server:um:");
+    UM("armagin:server:um:"),
+
+    /**
+     * 黑名单列表
+     */
+    BLACK_IP("armagin:server:black:ip")
+    ;
     private final String key;
 }
