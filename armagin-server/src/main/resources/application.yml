@@ -1,10 +1,19 @@
 server:
   port: 8086
 
-spring:
-  application:
-    name: armagin-server
+armagin:
+  server:
+    common:
+      # 错误页面路径
+      errorUrl: "/error"
+  kafka:
+    ip: localhost
+    port: 9092
+  transformEvent:
+    topic:
+      name: amgTransEvent
 
+spring:
   # 配置Kafka
   kafka:
     bootstrap-servers: ${armagin.kafka.ip}:${armagin.kafka.port}
@@ -59,12 +68,6 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-  cloud:
-    nacos:
-      discovery:
-        # 配置Nacos注册中心地址
-        server-addr: localhost:8848
-        namespace: 9eea61f7-7a31-43bd-9fad-f569948847bc
 
   #配置mybatis
   mybatis:
@@ -73,15 +76,3 @@ spring:
     #开启驼峰功能
     configuration:
       map-underscore-to-camel-case: true
-
-armagin:
-  server:
-    common:
-      # 错误页面路径
-      errorUrl: "/error"
-  kafka:
-    ip: localhost
-    port: 9092
-  transformEvent:
-    topic:
-      name: amgTransEvent
