@@ -6,6 +6,7 @@ import cc.forim.armagin.server.pipeline.TransformContext;
 import cn.hutool.json.JSONUtil;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +25,7 @@ import javax.annotation.Resource;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Slf4j
 public class TransformEventAction implements BusinessProcess {
 
     @Resource
@@ -49,6 +51,8 @@ public class TransformEventAction implements BusinessProcess {
 
         // JSON化记录
         String message = JSONUtil.toJsonStr(urlTransformRecordEvent);
+
+        log.info("消息转换记录构建：{}", message);
 
         // 发送记录到Kafka
         kafkaTemplate.send(topic, message);
