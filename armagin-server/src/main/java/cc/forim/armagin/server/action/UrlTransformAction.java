@@ -60,7 +60,7 @@ public class UrlTransformAction implements BusinessProcess {
             context.setParam(TransformEnum.LU.getValue(), longUrl);
             context.setTransformStatus(TransformStatus.TRANSFORM_SUCCESS);
         } else {
-            log.info("短链名有误: {}", compressionCode);
+            log.info("短链压缩码有误: {}", compressionCode);
             throw new RedirectToErrorPageException(String.format("[c:%s]", compressionCode));
         }
     }
