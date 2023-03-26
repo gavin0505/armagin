@@ -5,6 +5,8 @@
 
     <property name="log.path" value="logs"/>
 
+    <property name="model" value="server"/>
+
     <property name="app-name" value="armagin"/>
     <!--    <property name="dev-group-name" value=""/>-->
 
@@ -13,7 +15,7 @@
     <!-- 时间滚动输出 level为 INFO 日志 -->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${log.path}/armagin-server-info.log</file>
+        <file>${app-name}-${model}/${log.path}/${app-name}-${model}-info.log</file>
         <!--日志文件输出格式-->
         <encoder>
             <pattern>[%date{ISO8601}] [%level] %logger{80} [%thread] [%X{TRACE_ID}] ${app-name} - %msg%n</pattern>
@@ -22,7 +24,7 @@
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天日志归档路径以及格式 -->
-            <fileNamePattern>${log.path}/logs/armagin-server-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${app-name}-${model}/${log.path}/logs/${app-name}-${model}-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>1000MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -40,7 +42,7 @@
     <!-- 时间滚动输出 level为 ERROR 日志 -->
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${log.path}/armagin-server-error.log</file>
+        <file>${app-name}-${model}/${log.path}/${app-name}-${model}-error.log</file>
         <!--日志文件输出格式-->
         <encoder>
             <pattern>[%date{ISO8601}] [%level] %logger{80} [%thread] [%X{TRACE_ID}] ${app-name} - %msg%n</pattern>
@@ -48,7 +50,7 @@
         </encoder>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/logs/armagin-server-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${app-name}-${model}/${log.path}/logs/${app-name}-${model}-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>1000MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
