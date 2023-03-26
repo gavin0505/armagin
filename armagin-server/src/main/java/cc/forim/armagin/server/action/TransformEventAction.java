@@ -52,7 +52,7 @@ public class TransformEventAction implements BusinessProcess {
         // JSON化记录
         String message = JSONUtil.toJsonStr(urlTransformRecordEvent);
 
-        log.info("消息转换记录构建：{}", message);
+        log.info("消息转换记录：{}", message);
 
         // 发送记录到Kafka
         kafkaTemplate.send(topic, message);

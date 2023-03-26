@@ -54,8 +54,6 @@ public class UrlTransformAction implements BusinessProcess {
         // 在Redis映射压缩码获取长链接
         String longUrl = String.valueOf(redisTemplate.opsForHash().get(key, compressionCode));
 
-        log.info("longUrl: {}", longUrl);
-
         context.setTransformStatus(TransformStatus.TRANSFORM_FAIL);
 
         if (!StrUtil.equals(longUrl, TransformEnum.NULL.getValue())) {
