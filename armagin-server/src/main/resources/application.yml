@@ -12,6 +12,8 @@ armagin:
   transformEvent:
     topic:
       name: amgTransEvent
+    groupId:
+      name: group.amgTransEvent
 
 spring:
   # 配置Kafka
