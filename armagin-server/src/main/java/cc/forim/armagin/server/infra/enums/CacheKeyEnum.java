@@ -18,9 +18,14 @@ import lombok.ToString;
 public enum CacheKeyEnum {
 
     /**
-     * 映射前缀
+     * 长链映射前缀
      */
-    UM("armagin:server:um:"),
+    LUM("armagin:server:lum:"),
+
+    /**
+     * 短链映射前缀
+     */
+    SUM("armagin:server:sum:"),
 
     /**
      * 黑名单列表
