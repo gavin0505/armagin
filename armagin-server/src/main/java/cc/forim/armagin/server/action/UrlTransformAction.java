@@ -48,13 +48,21 @@ public class UrlTransformAction implements BusinessProcess {
         String alpha = path[1];
 
         // 组建Redis的键名
-        String key = CacheKeyEnum.UM.getKey() + alpha;
+        String key = CacheKeyEnum.LUM.getKey() + alpha;
         // 获取压缩码
         String compressionCode = context.getCompressionCode();
         // 在Redis映射压缩码获取长链接
         String longUrl = String.valueOf(redisTemplate.opsForHash().get(key, compressionCode));
 
+        // 获取短链接
+        String shortUrlKey = CacheKeyEnum.SUM.getKey() + alpha;
+        String shortUrl = String.valueOf(redisTemplate.opsForHash().get(shortUrlKey, compressionCode));
+
         context.setTransformStatus(TransformStatus.TRANSFORM_FAIL);
+
+        if (!StrUtil.equals(shortUrl, TransformEnum.NULL.getValue())) {
+            context.setParam(TransformEnum.SU.getValue(), shortUrl);
+        }
 
         if (!StrUtil.equals(longUrl, TransformEnum.NULL.getValue())) {
             context.setParam(TransformEnum.LU.getValue(), longUrl);
