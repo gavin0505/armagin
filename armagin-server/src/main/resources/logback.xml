@@ -68,7 +68,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>[%date{ISO8601}] [%level] %logger{80} [%thread] [%X{TRACE_ID}] - %msg%n</pattern>
+            <pattern>%red([%date{ISO8601}]) %highlight([%level]) %green(${app-name}-${model}) %logger{80} %green([%thread]) %boldMagenta([%X{TRACE_ID}]) - %msg%n</pattern>
             <!-- 设置字符集 -->
             <charset>UTF-8</charset>
         </encoder>
