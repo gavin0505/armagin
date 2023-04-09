@@ -4,6 +4,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Redis工具类
@@ -21,7 +22,7 @@ public final class RedisUtil {
     /**
      * 判断value是否在Set中
      */
-    public boolean sHasKey(String key, Object value) {
+    public Boolean sHasKey(String key, Object value) {
         try {
             return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
@@ -29,4 +30,26 @@ public final class RedisUtil {
             return false;
         }
     }
+
+    /**
+     * 左添加list
+     */
+    public void lPush(String key, Object value) {
+        redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    /**
+     * 获取list长度
+     */
+    public Long lSize(String key) {
+        return redisTemplate.opsForList().size(key);
+    }
+
+    /**
+     * 右弹出size个元素
+     */
+    public List<?> rPop(String key, Integer size) {
+        return redisTemplate.opsForList().rightPop(key, size);
+    }
+
 }
