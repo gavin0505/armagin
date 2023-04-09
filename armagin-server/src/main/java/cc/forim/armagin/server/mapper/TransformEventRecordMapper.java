@@ -3,6 +3,9 @@ package cc.forim.armagin.server.mapper;
 import cc.forim.armagin.server.infra.entity.TransformEventRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 转换事件记录Mapper
@@ -14,4 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TransformEventRecordMapper extends BaseMapper<TransformEventRecord> {
+
+    /**
+     * 自定义批量插入
+     *
+     * @param batchList 批量插入的数据
+     * @return 插入结果影响行数
+     */
+    int insertBatchSomeColumn(@Param("list") List<Object> batchList);
 }
