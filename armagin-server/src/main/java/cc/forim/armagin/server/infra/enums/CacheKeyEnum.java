@@ -28,6 +28,11 @@ public enum CacheKeyEnum {
     SUM("armagin:server:sum:"),
 
     /**
+     * 转换事件记录的临时缓存
+     */
+    TER_TEMP_CACHE_LIST("armagin:server:tcl"),
+
+    /**
      * 黑名单列表
      */
     BLACK_IP("armagin:server:black:ip")
