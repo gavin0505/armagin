@@ -48,7 +48,7 @@ public final class RedisUtil {
     /**
      * 右弹出size个元素
      */
-    public List<?> rPop(String key, Long size) {
+    public List<Object> rPop(String key, Long size) {
         return redisTemplate.opsForList().rightPop(key, size);
     }
 
