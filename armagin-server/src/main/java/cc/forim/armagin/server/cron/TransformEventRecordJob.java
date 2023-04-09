@@ -36,8 +36,7 @@ public class TransformEventRecordJob {
     @Scheduled(cron = "0/10 * * * * ?")
     public void job() {
 
-        Long size = 0L;
-        size = redisUtil.lSize(TER_TEMP_CACHE_LIST.getKey());
+        Long size = redisUtil.lSize(TER_TEMP_CACHE_LIST.getKey());
 
         if (size > 0L) {
             List<Object> records = redisUtil.rPop(TER_TEMP_CACHE_LIST.getKey(), size);
