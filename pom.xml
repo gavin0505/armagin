@@ -14,6 +14,7 @@
         <module>armagin-stream</module>
         <module>armagin-user</module>
         <module>armagin-common</module>
+        <module>armagin-shorturl</module>
     </modules>
     <properties>
         <java.version>17</java.version>
