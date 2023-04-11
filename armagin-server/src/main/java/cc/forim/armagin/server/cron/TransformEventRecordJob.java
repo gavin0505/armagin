@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -34,6 +35,7 @@ public class TransformEventRecordJob {
      * 10s执行一次
      */
     @Scheduled(cron = "0/10 * * * * ?")
+    @Transactional(rollbackFor = Exception.class)
     public void job() {
 
         Long size = redisUtil.lSize(TER_TEMP_CACHE_LIST.getKey());
