@@ -12,7 +12,6 @@
         <module>armagin-server</module>
         <module>armagin-web</module>
         <module>armagin-stream</module>
-        <module>armagin-shorturl</module>
         <module>armagin-user</module>
         <module>armagin-common</module>
     </modules>
