@@ -5,6 +5,13 @@ armagin:
   kafka:
     ip: localhost
     port: 9092
+  snowflake:
+    worker:
+      id: 1
+    data:
+      center:
+        id: 1
+
 
 spring:
   mvc:
