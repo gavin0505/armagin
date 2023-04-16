@@ -71,10 +71,10 @@ spring:
       test-on-borrow: false
       test-on-return: false
 
-  #配置mybatis
-  mybatis:
-    #映射文件所在的位置
-    mapper-locations: classpath*:mapper/**/*.xml
-    #开启驼峰功能
-    configuration:
-      map-underscore-to-camel-case: true
+#配置mybatis
+mybatis:
+  #映射文件所在的位置
+  mapper-locations: classpath*:mapper/**/*.xml
+  #开启驼峰功能
+  configuration:
+    map-underscore-to-camel-case: true
