@@ -5,6 +5,7 @@ import cc.forim.armagin.shorturl.infra.keygen.SnowflakeSequenceGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 序列生成器自动注入
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
  * @version V1.0
  * @since 2023/4/15 23:32
  */
+@Configuration
 public class SequenceGeneratorAutoConfiguration {
 
     @Bean
