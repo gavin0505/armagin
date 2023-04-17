@@ -1,4 +1,4 @@
-package cc.forim.armagin.shorturl.infra;
+package cc.forim.armagin.shorturl.infra.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
