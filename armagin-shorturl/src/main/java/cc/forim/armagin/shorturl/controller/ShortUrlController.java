@@ -32,6 +32,6 @@ public class ShortUrlController {
     @ApiOperation("创建短URL接口")
     @PostMapping("/createShortUrl")
     public ResultVo<ShortUrlCreationVo> createShortUrl(@RequestBody ShortUrlGenerateDto dto) {
-        return shortUrlService.createShortUrl(dto);
+        return shortUrlService.createShortUrlBiz(dto);
     }
 }

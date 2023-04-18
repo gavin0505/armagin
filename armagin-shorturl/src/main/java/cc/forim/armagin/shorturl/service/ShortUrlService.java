@@ -14,10 +14,10 @@ import cc.forim.armagin.shorturl.infra.vo.ShortUrlCreationVo;
 public interface ShortUrlService {
 
     /**
-     * 创建短链接
+     * 创建短链接业务
      *
      * @param dto 请求生成短链的传输数据
      * @return 短链接创建结果
      */
-    ResultVo<ShortUrlCreationVo> createShortUrl(ShortUrlGenerateDto dto);
+    ResultVo<ShortUrlCreationVo> createShortUrlBiz(ShortUrlGenerateDto dto);
 }
