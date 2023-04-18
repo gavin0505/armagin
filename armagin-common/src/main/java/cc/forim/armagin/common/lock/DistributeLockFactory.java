@@ -1,5 +1,6 @@
 package cc.forim.armagin.common.lock;
 
+import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import static cc.forim.armagin.common.enums.RedisConstant.DISTRIBUTED_LOCK_PATH_
  * @since 2023/4/14 10:33
  */
 @Component
+@RequiredArgsConstructor
 public class DistributeLockFactory {
 
     @Resource
