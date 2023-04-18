@@ -35,7 +35,7 @@ public enum CacheKeyEnum {
     /**
      * 黑名单列表
      */
-    BLACK_IP("armagin:server:black:ip")
+    BLACK_IP_SET("armagin:server:block:ip:set")
     ;
     private final String key;
 }

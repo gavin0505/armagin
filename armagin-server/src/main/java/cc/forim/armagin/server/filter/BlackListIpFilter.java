@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 
-import static cc.forim.armagin.server.infra.enums.CacheKeyEnum.BLACK_IP;
+import static cc.forim.armagin.server.infra.enums.CacheKeyEnum.BLACK_IP_SET;
 
 /**
  * 【2】黑名单IP拦截器
@@ -49,7 +49,7 @@ public class BlackListIpFilter implements WebFilter {
         String clientIp = IpUtil.X.extractClientIp(request);
 
         // 若请求ip不在黑名单，则继续执行
-        if (!redisUtil.sHasKey(BLACK_IP.getKey(), clientIp)) {
+        if (!redisUtil.sHasKey(BLACK_IP_SET.getKey(), clientIp)) {
             return chain.filter(exchange);
         }
         // 否则重定向到错误页面
