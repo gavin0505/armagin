@@ -1,6 +1,8 @@
 package cc.forim.armagin.shorturl.infra.config;
 
+import cc.forim.armagin.common.config.InsertBatchSqlInjector;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -12,4 +14,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("cc.forim.armagin.shorturl")
 public class MyBatisPlusConfig {
+
+    /**
+     * 自定义批量插入 SQL 注入器
+     */
+    @Bean
+    public InsertBatchSqlInjector insertBatchSqlInjector() {
+        return new InsertBatchSqlInjector();
+    }
 }
