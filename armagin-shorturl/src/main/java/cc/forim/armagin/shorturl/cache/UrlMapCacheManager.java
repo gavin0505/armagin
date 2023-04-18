@@ -1,9 +1,16 @@
 package cc.forim.armagin.shorturl.cache;
 
+import cc.forim.armagin.common.utils.RedisUtil;
 import cc.forim.armagin.shorturl.dao.UrlMapMapper;
+import cc.forim.armagin.shorturl.infra.dto.UrlMapCacheDto;
+import cc.forim.armagin.shorturl.infra.entity.UrlMap;
+import cc.forim.armagin.shorturl.infra.enums.CacheKey;
+import cc.forim.armagin.shorturl.infra.enums.UrlMapStatus;
+import cn.hutool.core.util.ObjectUtil;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.function.Function;
 
 /**
  * UrlMap缓存管理
@@ -16,6 +23,40 @@ import javax.annotation.Resource;
 @Component
 public class UrlMapCacheManager {
 
+    @Resource(name = "redisUtil")
+    private RedisUtil redisUtil;
+
     @Resource(name = "urlMapMapper")
     private UrlMapMapper urlMapMapper;
+
+    /**
+     * 刷新缓存中的UrlMap
+     *
+     * @param urlMap 新的urlMap
+     */
+    public void refreshUrlMapCache(UrlMap urlMap) {
+        if (ObjectUtil.isNotEmpty(urlMap)) {
+            refreshUrlMapCache(function.apply(urlMap));
+        }
+    }
+
+    private void refreshUrlMapCache(UrlMapCacheDto dto) {
+        redisUtil.hSet(CacheKey.ACCESS_CODE_HASH.getKey(), dto.getCompressionCode(), dto);
+    }
+
+    /**
+     * 转换工具：UrlMap -> UrlMapCacheDto
+     */
+    private final Function<UrlMap, UrlMapCacheDto> function = urlMap -> {
+        UrlMapCacheDto urlMapCacheDto = new UrlMapCacheDto();
+
+        urlMapCacheDto.setId(urlMap.getId());
+        urlMapCacheDto.setDescription(urlMap.getDescription());
+        urlMapCacheDto.setLongUrl(urlMap.getLongUrl());
+        urlMapCacheDto.setShortUrl(urlMap.getShortUrl());
+        urlMapCacheDto.setCompressionCode(urlMap.getCompressionCode());
+        urlMapCacheDto.setEnable(UrlMapStatus.AVAILABLE.getValue().equals(urlMap.getUrlStatus()));
+
+        return urlMapCacheDto;
+    };
 }
