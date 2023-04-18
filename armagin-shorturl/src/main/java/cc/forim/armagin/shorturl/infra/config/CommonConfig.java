@@ -1,5 +1,6 @@
-package cc.forim.armagin.server.infra.config;
+package cc.forim.armagin.shorturl.infra.config;
 
+import cc.forim.armagin.common.utils.RedisUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -9,13 +10,15 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
+ * 基本工具装配
+ *
  * @author Gavin Zhang
  * @version V1.0
- * @since 2023/3/18 23:15
+ * @since 2023/4/18 16:39
  */
-
 @Configuration
-public class RedisTemplateConfig {
+public class CommonConfig {
+
     /**
      * redisTemplate 序列化使用的jdk Serializable, 存储二进制字节码, 所以自定义序列化类
      */
@@ -41,5 +44,13 @@ public class RedisTemplateConfig {
         //使上面参数生效
         template.afterPropertiesSet();
         return template;
+    }
+
+    /**
+     * 装配RedisUtil
+     */
+    @Bean
+    public RedisUtil redisUtil() {
+        return new RedisUtil();
     }
 }
