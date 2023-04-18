@@ -22,5 +22,5 @@ public interface DomainConfMapper extends BaseMapper<DomainConf> {
      * @param domain 需要判断的域名
      * @return 结果
      */
-    DomainConf selectByDomain(@Param("domain") String domain);
+    DomainConf selectByDomain(@Param("domain") String domain, @Param("bizType")String bizType);
 }

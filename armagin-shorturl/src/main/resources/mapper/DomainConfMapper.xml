@@ -8,5 +8,6 @@
         WHERE deleted = 0
           AND domain_status = 1
           AND domain_value = #{domain}
+          AND biz_type = #{bizType}
     </select>
 </mapper>
