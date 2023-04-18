@@ -47,6 +47,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.2</version>
+        </dependency>
         <!--Nacos配置中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
