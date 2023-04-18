@@ -30,6 +30,8 @@ public class DomainConf {
 
     private String protocol;
 
+    private String bizType;
+
     private Integer domainStatus;
 
     private OffsetDateTime createTime;
