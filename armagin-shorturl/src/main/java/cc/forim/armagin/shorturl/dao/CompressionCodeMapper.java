@@ -3,9 +3,6 @@ package cc.forim.armagin.shorturl.dao;
 import cc.forim.armagin.shorturl.infra.entity.CompressionCode;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * 压缩码映射DB处理类
