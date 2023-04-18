@@ -1,5 +1,7 @@
 package cc.forim.armagin.shorturl.infra.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 进制转换器
  *
@@ -34,7 +36,7 @@ public enum ConversionUtils {
         }
         builder.append(CHARS.charAt(Long.valueOf(num).intValue()));
         String value = builder.reverse().toString();
-        return leftPad(value, MIN_LENGTH, '0');
+        return StringUtils.leftPad(value, MIN_LENGTH, '0');
     }
 
     /**
@@ -54,77 +56,5 @@ public enum ConversionUtils {
             value += (long) (tempCharValue * Math.pow(SCALE, string.length() - i - 1));
         }
         return value;
-    }
-
-    /**
-     * 字符串左补齐
-     *
-     * @param str     源字符串
-     * @param size    补齐下限长度
-     * @param padChar 补齐填充字符
-     * @return 完成补齐的字符串
-     */
-    private static String leftPad(String str, int size, char padChar) {
-        if (str == null) {
-            return null;
-        } else {
-            int pads = size - str.length();
-            if (pads <= 0) {
-                return str;
-            } else {
-                return pads > 8192 ? leftPad(str, size, String.valueOf(padChar)) : repeat(padChar, pads).concat(str);
-            }
-        }
-    }
-
-
-    private static String repeat(char ch, int repeat) {
-        if (repeat <= 0) {
-            return "";
-        } else {
-            char[] buf = new char[repeat];
-
-            for (int i = repeat - 1; i >= 0; --i) {
-                buf[i] = ch;
-            }
-
-            return new String(buf);
-        }
-    }
-
-    private static String leftPad(String str, int size, String padStr) {
-        if (str == null) {
-            return null;
-        } else {
-            if (isEmpty(padStr)) {
-                padStr = " ";
-            }
-
-            int padLen = padStr.length();
-            int strLen = str.length();
-            int pads = size - strLen;
-            if (pads <= 0) {
-                return str;
-            } else if (padLen == 1 && pads <= 8192) {
-                return leftPad(str, size, padStr.charAt(0));
-            } else if (pads == padLen) {
-                return padStr.concat(str);
-            } else if (pads < padLen) {
-                return padStr.substring(0, pads).concat(str);
-            } else {
-                char[] padding = new char[pads];
-                char[] padChars = padStr.toCharArray();
-
-                for (int i = 0; i < pads; ++i) {
-                    padding[i] = padChars[i % padLen];
-                }
-
-                return (new String(padding)).concat(str);
-            }
-        }
-    }
-
-    private static boolean isEmpty(CharSequence cs) {
-        return cs == null || cs.length() == 0;
     }
 }
