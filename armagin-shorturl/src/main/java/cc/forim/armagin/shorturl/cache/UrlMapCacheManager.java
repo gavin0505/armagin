@@ -1,7 +1,6 @@
 package cc.forim.armagin.shorturl.cache;
 
 import cc.forim.armagin.common.utils.RedisUtil;
-import cc.forim.armagin.shorturl.dao.UrlMapMapper;
 import cc.forim.armagin.shorturl.infra.dto.UrlMapCacheDto;
 import cc.forim.armagin.shorturl.infra.entity.UrlMap;
 import cc.forim.armagin.shorturl.infra.enums.CacheKey;
@@ -22,12 +21,12 @@ import java.util.function.Function;
 
 @Component
 public class UrlMapCacheManager {
+    private static final String HASH = "hash";
+
+    private static final String COLON = ":";
 
     @Resource(name = "redisUtil")
     private RedisUtil redisUtil;
-
-    @Resource(name = "urlMapMapper")
-    private UrlMapMapper urlMapMapper;
 
     /**
      * 刷新缓存中的UrlMap
@@ -41,7 +40,8 @@ public class UrlMapCacheManager {
     }
 
     private void refreshUrlMapCache(UrlMapCacheDto dto) {
-        redisUtil.hSet(CacheKey.ACCESS_CODE_HASH.getKey(), dto.getCompressionCode(), dto);
+        // 格式：armagin:server:access:code:业务类型:hash
+        redisUtil.hSet(CacheKey.ACCESS_CODE_HASH_PREFIX.getKey() + dto.getBizType() + COLON + HASH, dto.getCompressionCode(), dto);
     }
 
     /**
@@ -55,6 +55,7 @@ public class UrlMapCacheManager {
         urlMapCacheDto.setLongUrl(urlMap.getLongUrl());
         urlMapCacheDto.setShortUrl(urlMap.getShortUrl());
         urlMapCacheDto.setCompressionCode(urlMap.getCompressionCode());
+        urlMapCacheDto.setBizType(urlMap.getBizType());
         urlMapCacheDto.setEnable(UrlMapStatus.AVAILABLE.getValue().equals(urlMap.getUrlStatus()));
 
         return urlMapCacheDto;
