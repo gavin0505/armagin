@@ -20,7 +20,12 @@ public enum ResultStatusEnum {
     /**
      * 创建短链接失败
      */
-    CREATE_SHORT_URL_FAILED("500", "创建短链接失败");
+    CREATE_SHORT_URL_FAILED("500", "创建短链接失败"),
+
+    /**
+     * 创建短链接成功
+     */
+    CREATE_SHORT_URL_SUCCESS("200", "创建短链接成功");
 
     private final String code;
 
