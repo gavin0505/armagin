@@ -22,6 +22,8 @@ public class UrlMapCacheDto {
 
     private String compressionCode;
 
+    private String bizType;
+
     private String description;
 
     private Boolean enable;

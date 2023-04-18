@@ -35,6 +35,8 @@ public class UrlMap {
 
     private String longUrlDigest;
 
+    private String bizType;
+
     private String compressionCode;
 
     private String description;
