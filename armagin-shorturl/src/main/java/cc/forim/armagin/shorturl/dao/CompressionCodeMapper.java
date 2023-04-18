@@ -18,17 +18,17 @@ import java.util.List;
 public interface CompressionCodeMapper extends BaseMapper<CompressionCode> {
 
     /**
-     * 自定义批量插入
-     *
-     * @param batchList 批量插入的数据
-     * @return 插入结果影响行数
-     */
-    int insertBatchSomeColumn(@Param("list") List<Object> batchList);
-
-    /**
      * 获取一个最新可用的压缩码
      *
      * @return 压缩码
      */
     CompressionCode getLatestAvailableCompressionCode();
+
+    /**
+     * 更新压缩码状态
+     *
+     * @param record 压缩码
+     * @return 改变结果
+     */
+    int updateByPrimaryKeySelective(CompressionCode record);
 }

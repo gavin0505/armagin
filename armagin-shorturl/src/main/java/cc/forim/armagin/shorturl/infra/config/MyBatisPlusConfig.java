@@ -14,12 +14,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("cc.forim.armagin.shorturl")
 public class MyBatisPlusConfig {
-
-    /**
-     * 自定义批量插入 SQL 注入器
-     */
-    @Bean
-    public InsertBatchSqlInjector insertBatchSqlInjector() {
-        return new InsertBatchSqlInjector();
-    }
 }

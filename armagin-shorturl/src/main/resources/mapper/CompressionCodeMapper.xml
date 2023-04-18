@@ -11,4 +11,40 @@
         LIMIT 1
     </select>
 
+    <update id="updateByPrimaryKeySelective" parameterType="cc.forim.armagin.shorturl.infra.entity.CompressionCode">
+        update compression_code
+        <set>
+            <if test="compressionCode != null">
+                compression_code = #{compressionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="codeStatus != null">
+                code_status = #{codeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sequenceValue != null">
+                sequence_value = #{sequenceValue,jdbcType=VARCHAR},
+            </if>
+            <if test="strategy != null">
+                strategy = #{strategy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                edit_time = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null">
+                editor = #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>
