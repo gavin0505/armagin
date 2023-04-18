@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 /**
  * URL映射实体类
@@ -38,15 +39,17 @@ public class UrlMap {
 
     private String description;
 
+    private OffsetDateTime expireTime;
+
     private Integer urlStatus;
 
     private String creator;
 
     private String editor;
 
-    private OffsetDateTime createTime;
+    private Date createTime;
 
-    private OffsetDateTime editTime;
+    private Date editTime;
 
     private Long version;
 

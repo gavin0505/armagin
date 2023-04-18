@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.util.Date;
 
 /**
  * 域名配置实体类
@@ -34,9 +34,9 @@ public class DomainConf {
 
     private Integer domainStatus;
 
-    private OffsetDateTime createTime;
+    private Date createTime;
 
-    private OffsetDateTime editTime;
+    private Date editTime;
 
     private String creator;
 

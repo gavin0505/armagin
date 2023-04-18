@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.util.Date;
 
 /**
  * 压缩码实体类
@@ -37,9 +37,9 @@ public class CompressionCode {
 
     private String editor;
 
-    private OffsetDateTime createTime;
+    private Date createTime;
 
-    private OffsetDateTime editTime;
+    private Date editTime;
 
     private Long version;
 
