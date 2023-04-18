@@ -11,7 +11,13 @@ armagin:
     data:
       center:
         id: 1
-
+  shortUrl:
+    compress:
+      code:
+        # 单次生成压缩码个数
+        batch: 100
+        # 压缩码位数
+        bits: 8
 
 spring:
   mvc:
