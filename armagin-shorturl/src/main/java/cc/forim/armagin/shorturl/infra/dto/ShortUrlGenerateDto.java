@@ -23,9 +23,19 @@ public class ShortUrlGenerateDto {
     private String requestId;
 
     /**
+     * 短链域名
+     */
+    private String domain;
+
+    /**
      * 长Url
      */
     private String longUrl;
+
+    /**
+     * 短链类别标识
+     */
+    private String bizType;
 
     /**
      * 短链保持时间
