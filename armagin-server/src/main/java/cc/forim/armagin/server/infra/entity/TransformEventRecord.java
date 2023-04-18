@@ -3,10 +3,12 @@ package cc.forim.armagin.server.infra.entity;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +25,8 @@ import java.util.Date;
 @ToString
 @Builder
 @Accessors(chain = true)
-public class TransformEventRecord {
+@TableName("transform_event_record")
+public class TransformEventRecord implements Serializable {
 
     /**
      * 主键
