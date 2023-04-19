@@ -18,14 +18,9 @@ import lombok.ToString;
 public enum CacheKeyEnum {
 
     /**
-     * 长链映射前缀
+     * 可访问的压缩码映射前缀
      */
-    LUM("armagin:server:lum:"),
-
-    /**
-     * 短链映射前缀
-     */
-    SUM("armagin:server:sum:"),
+    ACCESS_CODE_HASH_PREFIX("armagin:server:access:code:"),
 
     /**
      * 转换事件记录的临时缓存
