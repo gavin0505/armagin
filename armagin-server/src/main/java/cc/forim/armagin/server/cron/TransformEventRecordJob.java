@@ -1,12 +1,15 @@
 package cc.forim.armagin.server.cron;
 
+import cc.forim.armagin.server.infra.entity.TransformEventRecord;
 import cc.forim.armagin.server.infra.utils.RedisUtil;
 import cc.forim.armagin.server.mapper.TransformEventRecordMapper;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,11 +41,19 @@ public class TransformEventRecordJob {
     @Transactional(rollbackFor = Exception.class)
     public void job() {
 
+        // 统计这一批的事件个数
         Long size = redisUtil.lSize(TER_TEMP_CACHE_LIST.getKey());
 
         if (size > 0L) {
-            List<Object> records = redisUtil.rPop(TER_TEMP_CACHE_LIST.getKey(), size);
+            // 防止Date格式因Object自动转换为时间戳，因此这里重新使用JSON解析
+            List<Object> obj = redisUtil.rPop(TER_TEMP_CACHE_LIST.getKey(), size);
+            String json = JSONUtil.toJsonStr(obj);
+            // help GC
+            obj = null;
 
+            List<TransformEventRecord> records = JSONUtil.toList(json, TransformEventRecord.class);
+
+            Assert.notNull(records, "records为空");
             // 分片插入（每 1000 条执行一次批量插入）
             int batchSize = 1000;
             int total = records.size();
@@ -60,7 +71,7 @@ public class TransformEventRecordJob {
                     batchSize = lastSize;
                 }
                 // 分片执行批量插入
-                if (transformEventRecordMapper.insertBatchSomeColumn(records.subList(i * batchSize, (i * batchSize + batchSize))) > 0) {
+                if (transformEventRecordMapper.insertBatchTransformEventRecord(records.subList(i * batchSize, (i * batchSize + batchSize))) > 0) {
                     log.info("分片插入成功！");
                 } else {
                     log.warn("分片插入失败...");

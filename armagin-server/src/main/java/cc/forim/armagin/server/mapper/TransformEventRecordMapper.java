@@ -19,10 +19,10 @@ import java.util.List;
 public interface TransformEventRecordMapper extends BaseMapper<TransformEventRecord> {
 
     /**
-     * 自定义批量插入
+     * 批量插入转换事件记录
      *
-     * @param batchList 批量插入的数据
+     * @param transformEventRecords 批量插入的数据
      * @return 插入结果影响行数
      */
-    int insertBatchSomeColumn(@Param("list") List<Object> batchList);
+    int insertBatchTransformEventRecord(@Param("list") List<TransformEventRecord> transformEventRecords);
 }

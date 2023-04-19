@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.forim.armagin.server.mapper.TransformEventRecordMapper">
+
+    <insert id="insertBatchTransformEventRecord">
+        insert into transform_event_record
+        (id, unique_identity, client_ip, short_url, long_url, short_url_digest, long_url_digest, compression_code,
+        record_time, user_agent, cookie_value, query_param, province, city, phone_type, browser_type, browser_version,
+        os_type, device_type, os_version, transform_status, creator, editor, create_time, edit_time, version, deleted)
+        VALUES
+        <foreach collection="list" item="record" separator=",">
+            (
+            #{record.id},
+            #{record.uniqueIdentity},
+            #{record.clientIp},
+            #{record.shortUrl},
+            #{record.longUrl},
+            #{record.shortUrlDigest},
+            #{record.longUrlDigest},
+            #{record.compressionCode},
+            #{record.recordTime,jdbcType=DATE},
+            #{record.userAgent},
+            #{record.cookieValue},
+            #{record.queryParam},
+            #{record.province},
+            #{record.city},
+            #{record.phoneType},
+            #{record.browserType},
+            #{record.browserVersion},
+            #{record.osType},
+            #{record.deviceType},
+            #{record.osVersion},
+            #{record.transformStatus},
+            #{record.creator},
+            #{record.editor},
+            #{record.createTime, jdbcType=DATE},
+            #{record.editTime, jdbcType=DATE},
+            #{record.version},
+            #{record.deleted}
+            )
+        </foreach>
+    </insert>
+</mapper>
