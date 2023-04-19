@@ -88,9 +88,10 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             ShortUrlCreationVo vo = new ShortUrlCreationVo();
             vo.setShortUrl(shortUrl);
             vo.setRequestId(dto.getRequestId());
-
+            log.info("获取短链成功：[{}]", vo);
             return ResultVo.success(ResultStatusEnum.CREATE_SHORT_URL_SUCCESS.getCode(), ResultStatusEnum.CREATE_SHORT_URL_SUCCESS.getDescription(), vo);
         }
+        log.info("获取短链失败：[requestId: {}]", dto.getRequestId());
         return ResultVo.error(ResultStatusEnum.CREATE_SHORT_URL_FAILED.getCode(), ResultStatusEnum.CREATE_SHORT_URL_FAILED.getDescription());
     }
 
