@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: armagin-order
+
+  cloud:
+    nacos:
+      discovery:
+        # 启用使用Nacos进行服务发现
+        enabled: true
+        server-addr: localhost:8848
+        namespace: 9eea61f7-7a31-43bd-9fad-f569948847bc
+
+      config:
+        # 启用使用Nacos进行配置管理
+        enabled: true
+        server-addr: localhost:8848
+        # 此应用程序的Nacos配置组
+        group: DEFAULT_GROUP
+        namespace: 9eea61f7-7a31-43bd-9fad-f569948847bc
