@@ -6,7 +6,8 @@
         SELECT *
         FROM compression_code
         WHERE code_status = 1
-          AND deleted = 0
+        AND domain_conf_id = #{domainConfId}
+        AND deleted = 0
         ORDER BY id
         LIMIT 1
     </select>
@@ -19,6 +20,9 @@
             </if>
             <if test="codeStatus != null">
                 code_status = #{codeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="domainConfId != null">
+                domain_conf_id = #{domainConfId,jdbcType=BIGINT},
             </if>
             <if test="sequenceValue != null">
                 sequence_value = #{sequenceValue,jdbcType=VARCHAR},

@@ -76,13 +76,10 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     @Override
     public ResultVo<ShortUrlCreationVo> createShortUrlBiz(ShortUrlGenerateDto dto) {
-        // 1. 解析订单
 
-        // 2. 库存管理
-
-        // 3. 创建短链
+        // 1. 创建短链
         String shortUrl = createRandomShortUrl(dto);
-        // 4. 返回结果
+        // 2. 返回结果
         if (StrUtil.isNotBlank(shortUrl)) {
             // 设置VO
             ShortUrlCreationVo vo = new ShortUrlCreationVo();
@@ -109,8 +106,12 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             // 上锁
             lock.lock(LockKey.CREATE_URL_MAP.getReleaseTime(), TimeUnit.MILLISECONDS);
 
+            // 判断短链域名和对应服务类别存在
+            DomainConf domainConf = domainConfMapper.selectByDomain(dto.getDomain(), dto.getBizType());
+            Assert.notNull(domainConf, String.format("域名不存在[c:%s]", dto.getDomain()));
+
             // 获取压缩码
-            CompressionCode compressionCode = getAvailableCompressCode();
+            CompressionCode compressionCode = getAvailableCompressCode(domainConf.getId());
 
             Assert.isTrue(Objects.nonNull(compressionCode) &&
                             CompressionCodeStatus.AVAILABLE.getValue().equals(compressionCode.getCodeStatus()),
@@ -119,10 +120,6 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             // 校验长链接
             String longUrl = dto.getLongUrl();
             Assert.isTrue(urlValidator.isValid(longUrl), String.format("链接[%s]非法", longUrl));
-
-            // 判断短链域名和对应服务类别存在
-            DomainConf domainConf = domainConfMapper.selectByDomain(dto.getDomain(), dto.getBizType());
-            Assert.notNull(domainConf, String.format("域名不存在[c:%s]", dto.getDomain()));
 
             // URL映射配置
             UrlMap urlMap = new UrlMap();
@@ -158,25 +155,26 @@ public class ShortUrlServiceImpl implements ShortUrlService {
      *
      * @return 可用的压缩码
      */
-    private CompressionCode getAvailableCompressCode() {
-        CompressionCode compressionCode = compressionCodeMapper.getLatestAvailableCompressionCode();
+    private CompressionCode getAvailableCompressCode(Long domainConfId) {
+        CompressionCode compressionCode = compressionCodeMapper.getLatestAvailableCompressionCode(domainConfId);
         if (Objects.nonNull(compressionCode)) {
             return compressionCode;
         } else {
-            generateBatchCompressionCodes();
-            return Objects.requireNonNull(compressionCodeMapper.getLatestAvailableCompressionCode());
+            generateBatchCompressionCodes(domainConfId);
+            return Objects.requireNonNull(compressionCodeMapper.getLatestAvailableCompressionCode(domainConfId));
         }
     }
 
     /**
      * 批量生成压缩码
      */
-    private void generateBatchCompressionCodes() {
+    private void generateBatchCompressionCodes(Long domainConfId) {
         for (int i = 0; i < compressCodeBatch; i++) {
             // 生成整型序列
             long sequence = sequenceGenerator.generate();
             CompressionCode compressionCode = new CompressionCode();
             compressionCode.setSequenceValue(String.valueOf(sequence));
+            compressionCode.setDomainConfId(domainConfId);
 
             // 压缩码进制转换（10 -> 62）
             String code = ConversionUtils.X.encode62(sequence);
@@ -184,8 +182,15 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             // 截取后n位为压缩码
             code = code.substring(code.length() - bits);
             compressionCode.setCompressionCode(code);
-            compressionCodeMapper.insert(compressionCode);
-            log.info("[生成压缩码：{}, 序列：{}]", compressionCode.getCompressionCode(), compressionCode.getSequenceValue());
+
+            // 执行插入
+            if (compressionCodeMapper.insert(compressionCode) > 0) {
+                log.info("[生成压缩码：{}, 短链域名配置id：{}, 序列：{}]",
+                        compressionCode.getCompressionCode(), domainConfId, compressionCode.getSequenceValue());
+            } else {
+                log.warn("插入压缩码失败 => [压缩码：{}, 短链域名配置id：{}, 序列：{}]",
+                        compressionCode.getCompressionCode(), domainConfId, compressionCode.getSequenceValue());
+            }
         }
     }
 }
