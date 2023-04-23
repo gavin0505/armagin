@@ -29,6 +29,8 @@ public class CompressionCode {
 
     private Integer codeStatus;
 
+    private Long domainConfId;
+
     private String sequenceValue;
 
     private String strategy;
