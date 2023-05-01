@@ -18,7 +18,7 @@ public enum ConversionUtils {
 
     private static final String CHARS = "oNWxUYwrXdCOIj4ck6M8RbiQa3H91pSmZTAh70zquLnKvt2VyEGlBsPJgDe5Ff";
     private static final int SCALE = 62;
-    private static final int MIN_LENGTH = 5;
+    private static final int MIN_LENGTH = 7;
 
     /**
      * 数字转62进制
