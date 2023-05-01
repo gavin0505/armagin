@@ -19,6 +19,7 @@ import cc.forim.armagin.shorturl.infra.utils.ConversionUtils;
 import cc.forim.armagin.shorturl.infra.vo.ShortUrlCreationVo;
 import cc.forim.armagin.shorturl.service.ShortUrlService;
 import cc.forim.armagin.shorturl.service.TransactionalService;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -139,6 +141,9 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             CompressionCode updater = new CompressionCode();
             updater.setCodeStatus(CompressionCodeStatus.USED.getValue());
             updater.setId(compressionCode.getId());
+
+            // 过期时间
+            urlMap.setExpireTime(getOffsetTimeFromNow(dto.getDurationTime()));
             // 事务，保存短链映射和更新压缩码状态
             transactionalService.saveUrlMapAndUpdateCompressCode(urlMap, updater);
             // 刷新缓存
@@ -192,5 +197,17 @@ public class ShortUrlServiceImpl implements ShortUrlService {
                         compressionCode.getCompressionCode(), domainConfId, compressionCode.getSequenceValue());
             }
         }
+    }
+
+    /**
+     * 获取从当前时间开始，往后偏移durationTime秒的时间
+     *
+     * @param durationTime 持续时间（秒）
+     */
+    private Date getOffsetTimeFromNow(Integer durationTime) {
+        // 当前时间
+        Date date = DateUtil.date();
+        // 计算过期时间
+        return DateUtil.offsetSecond(date, durationTime);
     }
 }
