@@ -40,7 +40,7 @@ public class ShortUrlGenerateDto {
     /**
      * 短链保持时间
      */
-    private String durationTime;
+    private Integer durationTime;
 
     /**
      * 描述
