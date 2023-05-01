@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
-import java.time.OffsetDateTime;
 import java.util.Date;
 
 /**
@@ -41,7 +40,7 @@ public class UrlMap {
 
     private String description;
 
-    private OffsetDateTime expireTime;
+    private Date expireTime;
 
     private Integer urlStatus;
 
