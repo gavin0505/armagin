@@ -2,6 +2,8 @@ package cc.forim.armagin.shorturl.infra.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 内部流转UrlMap -> Cache
@@ -21,6 +23,8 @@ public class UrlMapCacheDto {
     private String longUrl;
 
     private String compressionCode;
+
+    private Date expireTime;
 
     private String bizType;
 
