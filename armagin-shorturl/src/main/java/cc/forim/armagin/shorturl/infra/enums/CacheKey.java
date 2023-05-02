@@ -29,7 +29,10 @@ public enum CacheKey {
      */
     ACCESS_CODE_HASH_PREFIX("armagin:server:access:code:", "可访问的压缩码映射", -1L),
 
-    ;
+    /**
+     * 可访问的压缩码映射的过期时间前缀
+     */
+    EXPIRE_ACCESS_CODE_ZSET_PREFIX("armagin:server:expire:access:code:", "可访问的压缩码映射", -1L);
 
     private final String key;
     private final String description;
