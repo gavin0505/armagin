@@ -18,6 +18,10 @@ armagin:
         batch: 100
         # 压缩码位数
         bits: 8
+  # 服务类型
+  serviceType:
+    - "v"
+    - "f"
 
 spring:
   mvc:
