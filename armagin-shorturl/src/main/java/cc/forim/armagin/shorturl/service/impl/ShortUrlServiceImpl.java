@@ -33,6 +33,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static cc.forim.armagin.shorturl.infra.enums.CommonConstant.INFINITY_DATE;
+
 /**
  * 短链接操作服务实现类
  *
@@ -63,6 +65,11 @@ public class ShortUrlServiceImpl implements ShortUrlService {
 
     private final UrlValidator urlValidator = new UrlValidator(new String[]{CommonConstant.HTTP_PROTOCOL,
             CommonConstant.HTTPS_PROTOCOL});
+
+    /**
+     * 无限时间
+     */
+    private static final int INFINITY= -1;
 
     /**
      * 单次生成压缩码数量
@@ -205,8 +212,14 @@ public class ShortUrlServiceImpl implements ShortUrlService {
      * @param durationTime 持续时间（秒）
      */
     private Date getOffsetTimeFromNow(Integer durationTime) {
+        Date date = null;
+        // 长期有效
+        if (durationTime == INFINITY) {
+            date = DateUtil.parse(INFINITY_DATE);
+            return date;
+        }
         // 当前时间
-        Date date = DateUtil.date();
+        date = DateUtil.date();
         // 计算过期时间
         return DateUtil.offsetSecond(date, durationTime);
     }
