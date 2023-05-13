@@ -16,6 +16,7 @@
         <module>armagin-common</module>
         <module>armagin-shorturl</module>
         <module>armagin-order</module>
+        <module>armagin-gateway</module>
     </modules>
     <properties>
         <java.version>17</java.version>
