@@ -1,33 +1,52 @@
 server:
-  port: 7000
+  port: 8423
+
+armagin:
+  kafka:
+    ip: localhost
+    port: 9092
+  snowflake:
+    worker:
+      id: 1
+    data:
+      center:
+        id: 1
 
 spring:
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: shortUrl-route
-          uri: lb://armagin-shorturl
-          order: 1
-          predicates:
-            - Path=/shortUrl/**
-          filters:
-            - StripPrefix=1
-        - id: user-route
-          uri: lb://armagin-user
-          order: 1
-          predicates:
-            - Path=/user/**
-          filters:
-            - StripPrefix=1
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  application:
+    name: armagin-user
+  # 配置Kafka
+  kafka:
+    bootstrap-servers: ${armagin.kafka.ip}:${armagin.kafka.port}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 128kb
+      batch-size: 131072
+      # 64M
+      buffer-memory: 67108864
+      # max-request-size: 5242880
+      # linger-ms: 5
+      retries: 1
+      acks: 0
+      # 提升性能很重要
+      compression-type: gzip
+      properties:
+        # 5M
+        max.request.size: 5242880
+        linger.ms: 5
+    consumer:
+      -auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 3000
 
   # 配置Redis
   redis:
     host: localhost
     port: 6379
-
   # 数据库配置
   datasource:
     #druid配置
@@ -52,7 +71,6 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-
 
 #配置mybatis
 mybatis:
