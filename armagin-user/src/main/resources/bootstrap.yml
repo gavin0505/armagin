@@ -17,3 +17,8 @@ spring:
         # 此应用程序的Nacos配置组
         group: DEFAULT_GROUP
         namespace: 9eea61f7-7a31-43bd-9fad-f569948847bc
+        file-extension: yml
+        extension-configs[0]:
+          data-id: email-config.yml
+          group: ${spring.cloud.nacos.config.group}
+          refresh: true
