@@ -11,17 +11,15 @@ import cc.forim.armagin.user.dto.LoginDto;
 import cc.forim.armagin.user.dto.LogoutDto;
 import cc.forim.armagin.user.dto.RegisterMsgDto;
 import cc.forim.armagin.user.service.AccountService;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Optional;
 
-import static cc.forim.armagin.user.RoleCommon.*;
+import static cc.forim.armagin.user.infra.common.RoleCommon.*;
 
 /**
  * 账户服务实现类
