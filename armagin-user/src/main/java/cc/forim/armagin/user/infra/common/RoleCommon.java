@@ -1,4 +1,4 @@
-package cc.forim.armagin.user;
+package cc.forim.armagin.user.infra.common;
 
 /**
  * 系统角色常用枚举
