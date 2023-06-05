@@ -16,4 +16,11 @@
         where id = #{id}
           and deleted = 0
     </update>
+
+    <select id="selectUsernameById" resultType="java.lang.String">
+        select username
+        from sys_user
+        where id = #{id}
+          and deleted = 0
+    </select>
 </mapper>

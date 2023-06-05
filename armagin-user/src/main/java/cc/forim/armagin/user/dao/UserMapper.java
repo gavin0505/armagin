@@ -29,4 +29,9 @@ public interface UserMapper extends BaseMapper<SysUser> {
      * 更新最后登录时间
      */
     Integer updateLogged(@Param("id") Integer id, @Param("loggedTime") Date time);
+
+    /**
+     * 通过id获取用户名
+     */
+    String selectUsernameById(@Param("id") Integer id);
 }
