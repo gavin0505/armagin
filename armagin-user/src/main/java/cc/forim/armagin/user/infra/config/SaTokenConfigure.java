@@ -22,7 +22,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     public SaServletFilter getSaServletFilter() {
         return new SaServletFilter()
                 .addInclude("/**")
-                .addExclude("/favicon.ico")
+                // 放行swagger3
+                .addExclude("/swagger**/**", "/webjars/**", "/v3/**",
+                        "/doc.html/**", "/error", "/favicon.ico")
                 .setAuth(obj -> {
                     // 校验 Same-Token 身份凭证     —— 以下两句代码可简化为：SaSameUtil.checkCurrentRequestToken();
                     String token = SaHolder.getRequest().getHeader(SaSameUtil.SAME_TOKEN);
