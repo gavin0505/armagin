@@ -19,13 +19,14 @@ import static cc.forim.armagin.common.enums.RedisConstant.DISTRIBUTED_LOCK_PATH_
 @RequiredArgsConstructor
 public class DistributeLockFactory {
 
+    private static final String COLON = ":";
     @Resource
     private RedissonClient redissonClient;
 
     public DistributedLock provideDistributedLock(String lockKey) {
 
         // 分布式锁key
-        String lockPath = DISTRIBUTED_LOCK_PATH_PREFIX.getKey() + lockKey;
+        String lockPath = DISTRIBUTED_LOCK_PATH_PREFIX.getKey() + COLON + lockKey;
         return new RedissonDistributedLock(redissonClient, lockPath);
     }
 }
