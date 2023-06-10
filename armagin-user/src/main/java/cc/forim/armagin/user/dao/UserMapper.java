@@ -1,5 +1,6 @@
 package cc.forim.armagin.user.dao;
 
+import cc.forim.armagin.user.infra.dto.RegisterMsgDto;
 import cc.forim.armagin.user.infra.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,4 +35,24 @@ public interface UserMapper extends BaseMapper<SysUser> {
      * 通过id获取用户名
      */
     String selectUsernameById(@Param("id") Integer id);
+
+    /**
+     * 通过用户名获取用户id
+     */
+    Integer selectIdByUsername(@Param("username") String username);
+
+    /**
+     * 通过邮箱获取用户id
+     */
+    Integer selectIdByEmail(@Param("email") String email);
+
+    /**
+     * 新增用户
+     */
+    Integer insertUser(@Param("dto") RegisterMsgDto dto);
+
+    /**
+     * 新增用户角色映射
+     */
+    Integer insertUserRole(@Param("id") Integer id, @Param("role") Integer role);
 }

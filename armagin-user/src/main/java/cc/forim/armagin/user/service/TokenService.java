@@ -1,8 +1,8 @@
 package cc.forim.armagin.user.service;
 
 import cc.forim.armagin.common.ResultVo;
-import cc.forim.armagin.user.dto.GetUserInfoByTokenDto;
-import cc.forim.armagin.user.vo.UserInfoVo;
+import cc.forim.armagin.user.infra.dto.GetUserInfoByTokenDto;
+import cc.forim.armagin.user.infra.vo.UserInfoVo;
 
 /**
  * Token服务接口

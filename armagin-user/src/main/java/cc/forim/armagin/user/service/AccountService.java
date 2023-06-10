@@ -1,9 +1,9 @@
 package cc.forim.armagin.user.service;
 
 import cc.forim.armagin.common.ResultVo;
-import cc.forim.armagin.user.dto.LoginDto;
-import cc.forim.armagin.user.dto.LogoutDto;
-import cc.forim.armagin.user.dto.RegisterMsgDto;
+import cc.forim.armagin.user.infra.dto.LoginDto;
+import cc.forim.armagin.user.infra.dto.LogoutDto;
+import cc.forim.armagin.user.infra.dto.RegisterMsgDto;
 
 /**
  * 账户服务
@@ -38,4 +38,12 @@ public interface AccountService {
      * @return token
      */
     ResultVo<String> logout(LogoutDto logoutDto);
+
+    /**
+     * 是否登录
+     *
+     * @param token token
+     * @return 状态提示
+     */
+    ResultVo<String> ifLogin(String token);
 }

@@ -4,16 +4,19 @@ import cc.forim.armagin.common.ResultVo;
 import cc.forim.armagin.common.utils.StpAdminUtil;
 import cc.forim.armagin.common.utils.StpSuperAdminUtil;
 import cc.forim.armagin.common.utils.StpUserUtil;
+import cc.forim.armagin.user.dao.RoleMapper;
 import cc.forim.armagin.user.dao.UserMapper;
-import cc.forim.armagin.user.dto.GetUserInfoByTokenDto;
+import cc.forim.armagin.user.infra.dto.GetUserInfoByTokenDto;
 import cc.forim.armagin.user.service.TokenService;
-import cc.forim.armagin.user.vo.UserInfoVo;
+import cc.forim.armagin.user.infra.vo.UserInfoVo;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static cc.forim.armagin.user.infra.common.RoleCommon.*;
 
@@ -28,6 +31,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private RoleMapper roleMapper;
 
     @Override
     public ResultVo<UserInfoVo> getUserInfoByToken(GetUserInfoByTokenDto getUserInfoByTokenDto) {
@@ -101,11 +107,18 @@ public class TokenServiceImpl implements TokenService {
         // 获取用户id
         Object id = saTokenInfo.getLoginId();
 
-        // 查询用户名
+        // 查询用户名和权限
         if (ObjectUtil.isNotNull(id)) {
             String username = userMapper.selectUsernameById(Integer.parseInt(id.toString()));
             userInfoVo.setUsername(username);
+
+            // 查角色
+            String role = roleMapper.getRoleCodeById(Integer.parseInt(id.toString()));
+
+            List<String> rolesArr = Lists.newArrayList(role);
+            userInfoVo.setRole(rolesArr);
         }
+
         return userInfoVo;
     }
 }

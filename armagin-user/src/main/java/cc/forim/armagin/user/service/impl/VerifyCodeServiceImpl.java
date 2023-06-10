@@ -2,9 +2,11 @@ package cc.forim.armagin.user.service.impl;
 
 import cc.forim.armagin.common.ResultVo;
 import cc.forim.armagin.common.utils.RedisUtil;
-import cc.forim.armagin.user.dto.VerifyCodeDto;
+import cc.forim.armagin.user.infra.dto.VerifyCodeDto;
 import cc.forim.armagin.user.infra.enums.CacheKey;
+import cc.forim.armagin.user.infra.pending.TaskPendingHolder;
 import cc.forim.armagin.user.service.VerifyCodeService;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.mail.MailAccount;
@@ -15,6 +17,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.CompletableFuture;
 
 import static cc.forim.armagin.user.infra.enums.CommonConstant.COLON;
 import static cc.forim.armagin.user.infra.enums.CommonConstant.STRING;
@@ -77,18 +80,24 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Resource(name = "redisUtil")
     private RedisUtil redisUtil;
 
+    @Resource(name = "taskPendingHolder")
+    private TaskPendingHolder taskPendingHolder;
+
+
     @Override
     public ResultVo<String> getVerifyCode(VerifyCodeDto verifyCodeDto) {
 
-        // 生成6位验证码
-        String code = RandomUtil.randomNumbers(VERIFY_CODE_LENGTH);
+        // 异步发送邮件
+        CompletableFuture.runAsync(() -> {
+            // 生成6位验证码
+            String code = RandomUtil.randomNumbers(VERIFY_CODE_LENGTH);
 
-        // 解析渠道类型发送验证码
-        // todo 改异步线程池发送，防阻塞
-        switch (verifyCodeDto.getType()) {
-            case EMAIL -> sendVerifyCodeByEmail(code, verifyCodeDto.getAccount(), MAIL_EXIPRE_MINUTE_LOGIN);
-            case PHONE -> sendVerifyCodeByPhone(code, verifyCodeDto.getAccount());
-        }
+            switch (verifyCodeDto.getType()) {
+                case EMAIL -> sendVerifyCodeByEmail(code, verifyCodeDto.getAccount(), MAIL_EXIPRE_MINUTE_LOGIN);
+                case PHONE -> sendVerifyCodeByPhone(code, verifyCodeDto.getAccount());
+            }
+        }, taskPendingHolder.route());
+
         return ResultVo.success("已发送验证码");
     }
 
@@ -143,5 +152,22 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         if (!flag) {
             log.error("验证码存储失败，请检查网络或Redis连接情况，用户:【{}】，验证码：【{}】", account, code);
         }
+    }
+
+    /**
+     * 获取已生成的验证码
+     *
+     * @param account 账号
+     */
+    private String getGeneratedVerifyCode(String account) {
+        return ObjectUtil.toString(redisUtil.get(CacheKey.USER_REGISTER_VERIFY_CODE_STRING_PREFIX.getKey() + account + COLON + STRING));
+    }
+
+    @Override
+    public Boolean ifRegisterVerifyCodeValid(String account, String code) {
+        if (StrUtil.equals(code, getGeneratedVerifyCode(account))) {
+            return true;
+        }
+        return false;
     }
 }

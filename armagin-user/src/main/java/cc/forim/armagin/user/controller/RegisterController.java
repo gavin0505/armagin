@@ -1,14 +1,12 @@
 package cc.forim.armagin.user.controller;
 
 import cc.forim.armagin.common.ResultVo;
-import cc.forim.armagin.user.dto.RegisterMsgDto;
-import cc.forim.armagin.user.dto.VerifyCodeDto;
+import cc.forim.armagin.user.infra.dto.RegisterMsgDto;
+import cc.forim.armagin.user.infra.dto.VerifyCodeDto;
 import cc.forim.armagin.user.service.AccountService;
 import cc.forim.armagin.user.service.VerifyCodeService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

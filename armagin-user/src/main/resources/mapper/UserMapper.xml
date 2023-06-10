@@ -23,4 +23,26 @@
         where id = #{id}
           and deleted = 0
     </select>
+
+    <select id="selectIdByUsername" resultType="java.lang.Integer">
+        select id
+        from sys_user
+        where username = #{username}
+          and deleted = 0
+    </select>
+
+    <select id="selectIdByEmail" resultType="java.lang.Integer">
+        select id
+        from sys_user
+        where email = #{email}
+          and deleted = 0
+    </select>
+
+    <insert id="insertUser">
+        insert into sys_user(username, email, password) value (#{dto.username}, #{dto.email}, #{dto.password})
+    </insert>
+
+    <insert id="insertUserRole">
+        insert into sys_user_role_mapping(user_id, role_id) value (#{id}, #{role})
+    </insert>
 </mapper>

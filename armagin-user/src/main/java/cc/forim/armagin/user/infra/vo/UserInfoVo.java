@@ -1,4 +1,4 @@
-package cc.forim.armagin.user.dto;
+package cc.forim.armagin.user.infra.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,27 +7,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
- * 注册信息载体
+ * 登录信息VO
  *
  * @author Gavin Zhang
  * @version V1.0
- * @since 2023/5/22 22:45
+ * @since 2023/6/4 22:05
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("注册信息")
-public class RegisterMsgDto {
+@ApiModel("登录信息VO")
+public class UserInfoVo {
 
     @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
-    @ApiModelProperty(value = "密码", required = true)
-    private String password;
-
-    @ApiModelProperty(value = "验证码")
-    private String code;
+    @ApiModelProperty(value = "角色", required = true)
+    private List<String> role;
 }
