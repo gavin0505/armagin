@@ -18,9 +18,9 @@ import lombok.ToString;
 public enum EmailContentEnum {
 
     /**
-     * 登录验证码
+     * 注册验证码
      */
-    VERIFY_CODE_TO_LOGIN("0001", "登录验证码: {}", "您正在进行Armagin短链接平台的【登录】操作。本次登录的验证码为:【{}】, {}分钟内有效。");
+    VERIFY_CODE_TO_REGISTER("0001", "注册验证码: {}", "您正在进行Armagin短链接平台的【注册】操作。本次登录的验证码为:【{}】, {}分钟内有效。");
 
     private final String code;
 

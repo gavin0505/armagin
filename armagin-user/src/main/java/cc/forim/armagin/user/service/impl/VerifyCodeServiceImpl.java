@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static cc.forim.armagin.user.infra.enums.CommonConstant.COLON;
 import static cc.forim.armagin.user.infra.enums.CommonConstant.STRING;
-import static cc.forim.armagin.user.infra.enums.EmailContentEnum.VERIFY_CODE_TO_LOGIN;
+import static cc.forim.armagin.user.infra.enums.EmailContentEnum.VERIFY_CODE_TO_REGISTER;
 
 /**
  * 验证码服务实现类
@@ -117,9 +117,9 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
             account.setPass(emailPassword);
 
             // 标题替换
-            String title = StrUtil.format(VERIFY_CODE_TO_LOGIN.getTitle(), code);
+            String title = StrUtil.format(VERIFY_CODE_TO_REGISTER.getTitle(), code);
             // 内容替换
-            String content = StrUtil.format(VERIFY_CODE_TO_LOGIN.getContent(), code, expireMinute);
+            String content = StrUtil.format(VERIFY_CODE_TO_REGISTER.getContent(), code, expireMinute);
 
             // 发送邮件，此处可以用流量控制做防盗刷，本次没做
             String send = MailUtil.send(account, receiver, title, content, false);
