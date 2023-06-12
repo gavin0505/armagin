@@ -1,10 +1,12 @@
 package cc.forim.armagin.server.mapper;
 
 import cc.forim.armagin.server.infra.entity.TransformEventRecord;
+import cc.forim.armagin.server.infra.entity.VisitStatistics;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -25,4 +27,11 @@ public interface TransformEventRecordMapper extends BaseMapper<TransformEventRec
      * @return 插入结果影响行数
      */
     int insertBatchTransformEventRecord(@Param("list") List<TransformEventRecord> transformEventRecords);
+
+
+    /**
+     * 查询访问统计
+     */
+    List<VisitStatistics> selectVisitStatisticsDuration(@Param("start") OffsetDateTime start,
+                                                       @Param("end") OffsetDateTime end);
 }

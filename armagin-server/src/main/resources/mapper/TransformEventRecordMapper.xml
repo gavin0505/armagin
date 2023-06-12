@@ -4,13 +4,12 @@
 
     <insert id="insertBatchTransformEventRecord">
         insert into transform_event_record
-        (id, unique_identity, client_ip, short_url, long_url, short_url_digest, long_url_digest, compression_code,
-        record_time, user_agent, cookie_value, query_param, province, city, phone_type, browser_type, browser_version,
-        os_type, device_type, os_version, transform_status, creator, editor, create_time, edit_time, version, deleted)
+        (unique_identity, client_ip, short_url, long_url, short_url_digest, long_url_digest, compression_code,
+        user_agent, cookie_value, query_param, province, city, phone_type, browser_type, browser_version,
+        os_type, device_type, os_version, transform_status)
         VALUES
         <foreach collection="list" item="record" separator=",">
             (
-            #{record.id},
             #{record.uniqueIdentity},
             #{record.clientIp},
             #{record.shortUrl},
@@ -18,7 +17,6 @@
             #{record.shortUrlDigest},
             #{record.longUrlDigest},
             #{record.compressionCode},
-            #{record.recordTime,jdbcType=DATE},
             #{record.userAgent},
             #{record.cookieValue},
             #{record.queryParam},
@@ -30,14 +28,25 @@
             #{record.osType},
             #{record.deviceType},
             #{record.osVersion},
-            #{record.transformStatus},
-            #{record.creator},
-            #{record.editor},
-            #{record.createTime, jdbcType=DATE},
-            #{record.editTime, jdbcType=DATE},
-            #{record.version},
-            #{record.deleted}
+            #{record.transformStatus}
             )
         </foreach>
     </insert>
+
+    <select id="selectVisitStatisticsDuration" resultType="cc.forim.armagin.server.infra.entity.VisitStatistics">
+        SELECT COUNT(1)                             AS                `pv_count`,
+               IFNULL(COUNT(DISTINCT unique_identity), 0)             `uv_count`,
+               IFNULL(COUNT(DISTINCT client_ip), 0)                   `ip_count`,
+               SUM(CASE WHEN transform_status = 3 THEN 1 ELSE 0 END)  `effective_redirection_count`,
+               SUM(CASE WHEN transform_status != 3 THEN 1 ELSE 0 END) `ineffective_redirection_count`,
+               DATE_FORMAT(record_time, '%Y-%m-%d') AS                `statistics_date`,
+               compression_code                     AS                `compression_code`,
+               short_url_digest                     AS                `short_url_digest`,
+               long_url_digest                      AS                `long_url_digest`
+        FROM transform_event_record
+        WHERE deleted = 0
+          AND record_time <![CDATA[>=]]> #{start,jdbcType=TIMESTAMP}
+          AND record_time <![CDATA[<=]]> #{end,jdbcType=TIMESTAMP}
+        GROUP BY compression_code, DATE_FORMAT(record_time, '%Y-%m-%d'), short_url_digest, long_url_digest
+    </select>
 </mapper>

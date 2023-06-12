@@ -33,7 +33,7 @@ public class TransformEventRecord implements Serializable {
      */
     @ApiModelProperty(name = "主键")
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 唯一身份标识,SHA-1(客户端IP-UA)
@@ -208,7 +208,7 @@ public class TransformEventRecord implements Serializable {
      */
     @ApiModelProperty(name = "版本号")
     @Builder.Default
-    private Integer version = 1;
+    private Long version = 1L;
 
     /**
      * 软删除标识

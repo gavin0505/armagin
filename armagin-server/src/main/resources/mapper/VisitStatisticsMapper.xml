@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.forim.armagin.server.mapper.VisitStatisticsMapper">
+
+
+    <select id="selectByUniqueKey" resultType="cc.forim.armagin.server.infra.entity.VisitStatistics">
+        select *
+        from armagin.visit_statistics
+        where compression_code = #{compressionCode}
+          and statistics_date = #{statisticsDate}
+          and short_url_digest = #{shortUrlDigest}
+          and long_url_digest = #{longUrlDigest}
+          and deleted = 0
+    </select>
+</mapper>
