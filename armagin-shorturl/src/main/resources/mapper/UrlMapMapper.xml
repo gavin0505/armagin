@@ -2,5 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.forim.armagin.shorturl.dao.UrlMapMapper">
 
-
+    <update id="expiredByIds">
+        update url_map set url_status = 2 where id in
+        <foreach item="item" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

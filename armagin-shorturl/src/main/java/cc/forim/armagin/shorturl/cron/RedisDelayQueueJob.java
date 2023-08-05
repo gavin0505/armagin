@@ -1,7 +1,11 @@
 package cc.forim.armagin.shorturl.cron;
 
 import cc.forim.armagin.common.utils.RedisUtil;
+import cc.forim.armagin.shorturl.dao.UrlMapMapper;
+import cc.forim.armagin.shorturl.infra.dto.UrlMapCacheDto;
 import cc.forim.armagin.shorturl.infra.enums.CacheKey;
+import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Set;
 
 import static cc.forim.armagin.shorturl.infra.enums.CommonConstant.*;
@@ -43,6 +48,9 @@ public class RedisDelayQueueJob {
 
     private String[] serviceType;
 
+    @Resource
+    private UrlMapMapper urlMapMapper;
+
     /**
      * 每1s执行一次，删除Redis中过期URL映射
      */
@@ -66,14 +74,26 @@ public class RedisDelayQueueJob {
                 log.info("检测到【服务{}】的过期短链：{}", type, expireKeys);
                 // 遍历删除Hash中的过期keys
                 // todo 后期可改用流水线优化
+
+                List<Long> expiredUrlMapIds = Lists.newArrayList();
                 for (Object expireKey :
                         expireKeys) {
+
+                    // 获取过期UrlMap的id
+                    Object objUrlMapCacheDto = redisUtil.hGet(hashKey, expireKey);
+                    String jsonUrlMapCacheDto = JSONUtil.toJsonStr(objUrlMapCacheDto);
+                    UrlMapCacheDto urlMapCacheDto = JSONUtil.toBean(jsonUrlMapCacheDto, UrlMapCacheDto.class);
+                    Long urlMapId = urlMapCacheDto.getId();
+
                     if (redisUtil.hDel(hashKey, expireKey) > 0 && redisUtil.zSetDel(zSetKey, expireKey) > 0) {
+                        expiredUrlMapIds.add(urlMapId);
                         log.info("删除【服务{}】的过期短链：{}", type, expireKey);
-                    }else {
+                    } else {
                         log.warn("未能删除【服务{}】的过期短链：{}", type, expireKey);
                     }
                 }
+                // 数据库设置urlMap失效
+                urlMapMapper.expiredByIds(expiredUrlMapIds);
             }
         }
     }
