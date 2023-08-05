@@ -39,6 +39,7 @@ public class TransformEventServiceImpl implements TransformEventService {
         record.setUniqueIdentity(uniqueIdentity);
         record.setShortUrlDigest(DigestUtils.sha1Hex(record.getShortUrl()));
         record.setLongUrlDigest(DigestUtils.sha1Hex(record.getLongUrl()));
+
         try {
             URL url = new URL(record.getShortUrl());
             // 短链的附加参数
@@ -48,6 +49,9 @@ public class TransformEventServiceImpl implements TransformEventService {
         } catch (Exception e) {
             log.warn("解析TransformEvent事件中短链的查询参数异常,事件内容:{}", record, e);
         }
+
+        log.info("userAgent: {}", record.getUserAgent());
+
         // 解析User-Agent
         if (StrUtil.isNotEmpty(record.getUserAgent())) {
             try {
@@ -76,12 +80,13 @@ public class TransformEventServiceImpl implements TransformEventService {
                 Version browserVersion = userAgent.getBrowserVersion();
                 Optional.ofNullable(browserVersion).ifPresent(x -> record.setBrowserVersion(x.getVersion()));
 
-                // 聚合到redis
-                redisUtil.lPush(TER_TEMP_CACHE_LIST.getKey(), record);
-                log.info("处理完成:{} ", record);
             } catch (Exception e) {
                 log.error("解析TransformEvent中的UserAgent异常,事件内容:{}", record, e);
             }
         }
+
+        // 聚合到redis
+        redisUtil.lPush(TER_TEMP_CACHE_LIST.getKey(), record);
+        log.info("处理完成:{} ", record);
     }
 }
