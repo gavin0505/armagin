@@ -21,7 +21,8 @@ armagin:
   # 服务类型
   serviceType:
     - "v"
-    - "f"
+    - "a"
+    - "j"
 
 spring:
   mvc:
