@@ -10,12 +10,9 @@
     <description>armagin</description>
     <modules>
         <module>armagin-server</module>
-        <module>armagin-web</module>
-        <module>armagin-stream</module>
         <module>armagin-user</module>
         <module>armagin-common</module>
         <module>armagin-shorturl</module>
-        <module>armagin-order</module>
         <module>armagin-gateway</module>
     </modules>
     <properties>
