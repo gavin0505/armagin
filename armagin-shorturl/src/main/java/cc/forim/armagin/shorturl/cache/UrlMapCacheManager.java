@@ -75,6 +75,7 @@ public class UrlMapCacheManager {
         urlMapCacheDto.setBizType(urlMap.getBizType());
         urlMapCacheDto.setEnable(UrlMapStatus.AVAILABLE.getValue().equals(urlMap.getUrlStatus()));
         urlMapCacheDto.setExpireTime(urlMap.getExpireTime());
+        urlMapCacheDto.setUserId(urlMap.getUserId());
 
         return urlMapCacheDto;
     };

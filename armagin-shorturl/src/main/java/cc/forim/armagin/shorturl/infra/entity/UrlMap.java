@@ -40,6 +40,8 @@ public class UrlMap {
 
     private String description;
 
+    private Long userId;
+
     private Date expireTime;
 
     private Integer urlStatus;

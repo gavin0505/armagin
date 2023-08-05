@@ -31,4 +31,6 @@ public class UrlMapCacheDto {
     private String description;
 
     private Boolean enable;
+
+    public Long userId;
 }

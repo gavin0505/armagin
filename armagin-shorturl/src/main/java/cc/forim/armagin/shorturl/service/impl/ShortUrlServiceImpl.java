@@ -140,7 +140,7 @@ public class ShortUrlServiceImpl implements ShortUrlService {
             urlMap.setCompressionCode(code);
             urlMap.setUrlStatus(CompressionCodeStatus.AVAILABLE.getValue());
             urlMap.setDescription(dto.getDescription());
-
+            urlMap.setUserId(dto.getUserId());
             // 长短链的摘要
             urlMap.setShortUrlDigest(DigestUtils.sha1Hex(urlMap.getShortUrl()));
             urlMap.setLongUrlDigest(DigestUtils.sha1Hex(urlMap.getLongUrl()));

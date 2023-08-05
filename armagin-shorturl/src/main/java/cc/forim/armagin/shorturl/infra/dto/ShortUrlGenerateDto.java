@@ -46,4 +46,9 @@ public class ShortUrlGenerateDto {
      * 描述
      */
     private String description;
+
+    /**
+     * 用户id
+     */
+    private Long userId;
 }
